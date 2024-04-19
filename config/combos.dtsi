@@ -74,3 +74,6 @@ ZMK_COMBO(pipe,  &kp PIPE,      RM3 RB3,     BSE NAV NUM, COMBO_TERM_SLOW)
 
 /* Other combos */
 ZMK_COMBO(cad,   &kp LC(LA(DEL)), LT5 LM5 LB5, ALL,         COMBO_TERM_SLOW)
+
+ZMK_COMBO(syslayer,  &mo SYS,      LH0 RH0,     BSE, COMBO_TERM_SLOW)
+
