@@ -40,7 +40,7 @@
 #define UC 7
 #define MSE 8
 
-#include "combos.dtsi"  // requires layer aliases
+#include "my_combos.dtsi"  // requires layer aliases
 #include "mouse.dtsi"
 
 /* Global settings */
