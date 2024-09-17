@@ -40,7 +40,7 @@
 #define UC 7
 #define MSE 8
 
-// #include "my_combos.dtsi"  // requires layer aliases
+#include "my_combos.dtsi"  // requires layer aliases
 #include "mouse.dtsi"
 
 /* Global settings */
@@ -341,7 +341,7 @@ ZMK_LAYER(num,
      // ├─────────────┼────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
           ___           TAB_LEFT     TAB_RIGHT     &tab_swapper  &grave_swapper &kp PG_DN         &kp MINUS     &kp N1        &kp N2        &kp N3        &kp SLASH     ___
      // ╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
-                                                    ___           ___           CANCEL            &kp ESC       &kp N0           &kp N0
+                                                    ___           ___           CANCEL            &kp bspc_morph       &kp N0           &kp N0
      //                                           ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
 )
 
