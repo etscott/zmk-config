@@ -84,7 +84,7 @@ MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS)  // right-hand HRMs
         flavor = "balanced"; \
         tapping-term-ms = <280>; \
         quick-tap-ms = <QUICK_TAP_MS>; \
-        require-prior-idle-ms = <80>; \
+        require-prior-idle-ms = <40>; \
         bindings = <HOLD>, <TAP>; \
         hold-trigger-key-positions = <TRIGGER_POS>; \
         hold-trigger-on-release; \
@@ -341,7 +341,7 @@ ZMK_LAYER(num,
      // ├─────────────┼────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
           ___           TAB_LEFT     TAB_RIGHT     &tab_swapper  &grave_swapper &kp PG_DN         &kp MINUS     &kp N1        &kp N2        &kp N3        &kp SLASH     ___
      // ╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
-                                                    ___           ___           CANCEL            &kp bspc_morph       &kp N0           &kp N0
+                                                    ___           ___           CANCEL            &bspc_morph       &kp N0           &kp N0
      //                                           ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
 )
 
