@@ -58,20 +58,35 @@
 #define MAKE_HRM(NAME, HOLD, TAP, TRIGGER_POS)                                 \
   ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; flavor = "balanced";            \
                tapping-term-ms = <280>; quick-tap-ms = <QUICK_TAP_MS>;         \
-               require-prior-idle-ms = <150>; hold-trigger-on-release;         \
+               require-prior-idle-ms = <100>; hold-trigger-on-release;         \
                hold-trigger-key-positions = <TRIGGER_POS>;)
 
 MAKE_HRM(hml, &kp, &kp, KEYS_R THUMBS) // Left-hand HRMs.
 MAKE_HRM(hmr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
 
-#define MAKE_HRM_SHIFT(NAME, HOLD, TAP, TRIGGER_POS)                                 \
-  ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; flavor = "balanced";            \
-               tapping-term-ms = <280>; quick-tap-ms = <QUICK_TAP_MS>;         \
-               require-prior-idle-ms = <0>; hold-trigger-on-release;         \
+#define MAKE_HRM_SHIFT(NAME, HOLD, TAP, TRIGGER_POS)                          \
+  ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; flavor = "balanced";           \
+               tapping-term-ms = <280>; quick-tap-ms = <QUICK_TAP_MS>;        \
+               require-prior-idle-ms = <20>; hold-trigger-on-release;         \
                hold-trigger-key-positions = <TRIGGER_POS>;)
 
 MAKE_HRM_SHIFT(hmsl, &kp, &kp, KEYS_R THUMBS) // Left-hand HRMs.
 MAKE_HRM_SHIFT(hmsr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
+
+#define MAKE_HRM_SHIFT_HP(NAME, HOLD, TAP, TRIGGER_POS)                        \
+  ZMK_HOLD_TAP(NAME, bindings = <HOLD>, <TAP>; flavor = "hold-preferred";      \
+               tapping-term-ms = <280>; quick-tap-ms = <QUICK_TAP_MS>;         \
+               require-prior-idle-ms = <20>;                                   \
+               hold-trigger-key-positions = <TRIGGER_POS>;)
+
+MAKE_HRM_SHIFT_HP(hmshpl, &kp, &kp, KEYS_R THUMBS) // Left-hand HRMs.
+MAKE_HRM_SHIFT_HP(hmshpr, &kp, &kp, KEYS_L THUMBS) // Right-hand HRMs.
+
+// Make layer holds hold-preferred
+ZMK_HOLD_TAP(laho, bindings = <&mo>, <&kp>; \
+               flavor = "hold-preferred"; \
+               tapping-term-ms = <220>; \
+               quick-tap-ms = <220>;)
 
 
 // Hack: Make HRM combos tap-only (cf, ZMK issue #544).
@@ -209,11 +224,11 @@ ZMK_LAYER(base,
      // ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
           &kp LGUI       &kp Q         &kp W         &kp E         &kp R         &kp T             &kp Y         &kp U         &kp I         &kp O         &kp P         &bs_del
      // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-          &mo MOUSE      &hmsl LSHFT A &hml LCTRL S  &hml LALT D   &hml LGUI F  &kp G              &kp H         &hmr LGUI J   &hmr LALT  K  &hmr LCTRL L  &hmsr RSHFT SEMI &kp SQT
+          &lt MOUSE LGUI &hmsl LSHFT A &hml LCTRL S  &hml LALT D   &hml LGUI F  &kp G              &kp H        &hmr LGUI J   &hmr LALT  K  &hmr LCTRL L  &hmsr RSHFT SEMI &kp COLON
      // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-          &smart_shft   &kp Z         &kp X         &kp C         &kp V         &kp B             &kp N         &kp M         &kp COMMA     &kp DOT       &kp FSLH      &smart_shft
+          &smart_shft  &hmshpl LSHFT Z &hmsl LCTRL X &hmsl LALT C   &hmsl LGUI V  &kp B            &kp N        &hmsr LGUI M &hmsr LALT COMMA &hmsr LCTRL DOT &hmshpr RSHFT FSLH &smart_shft
      // ╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
-                                                    &mo SYS       &lt NUM ESC   &lt NAV TAB       &lt SYM SPACE  &kp ENTER   &mo FN
+                                                    &mo SYS       &laho NUM ESC   &lt NAV TAB     &lt SYM SPACE  &laho SYM ENTER   &mo FN
      //                                           ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
 )
 
@@ -225,21 +240,33 @@ ZMK_LAYER(nav,
      // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
           &kp C_VOL_DN  ___          &esc_swapper  &tab_swapper  &grave_swapper &kp PG_DN         ___           &kp PG_UP     ___           &kp PG_DN     ___           ___
      // ╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
-                                                    ___           ___           ___               &kp TAB       &kp ENTER     &mo SYS
+                                                    ___           ___           ___               &kp ENTER     &kp ENTER     &mo SYS
      //                                           ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
 )
 
 ZMK_LAYER(sym,
      // ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
-          &esc_swapper  &kp EXCL      &kp AT        &kp POUND     &kp DOLLAR    &kp PRCNT         &kp CARET     &kp AMPS      &kp ASTRK     &kp LPAR      &kp RPAR      ___
+          ___           &kp LT        &kp GT        &kp LPAR      &kp RPAR      ___               ___           &kp AMPS      &kp ASTRK     &kp LPAR      ___           ___
      // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-          ___           &sk LSHFT     &sk LCTRL     &sk LALT      &sk LGUI      &kp PG_UP         &kp GRAVE     &kp MINUS     &kp EQUAL     &kp LBKT      &kp RBKT      &kp BSLH
-     // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
-          ___           TAB_LEFT      TAB_RIGHT     &tab_swapper  &grave_swapper &kp PG_DN        &kp TILDE     &kp UNDER     &kp PLUS      &kp LBRC      &kp RBRC      &kp PIPE
+          &kp BSLH      &kp LBKT      &kp RBKT      &kp UNDER     &kp EQUAL     &kp SQT          ___           &kp DOLLAR    &kp PRCNT     &kp CARET     &kp GRAVE      ___ 
+     // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+          &kp PIPE      &kp LBRC      &kp RBRC      &kp MINUS     &kp PLUS      &kp DQT          ___           &kp EXCL      &kp AT        &kp POUND     &kp TILDE      ___
      // ╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
-                                                    ___           ___            ___              ___           ___           ___
+                                                    ___           ___           ___               ___           ___           ___
      //                                           ╰─────────────┴───────────────────────────╯   ╰─────────────┴─────────────┴─────────────╯
 )
+
+// ZMK_LAYER(sym,
+//      // ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
+//           &esc_swapper  &kp EXCL      &kp AT        &kp POUND     &kp DOLLAR    &kp PRCNT         &kp CARET     &kp AMPS      &kp ASTRK     &kp LPAR      &kp RPAR      ___
+//      // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+//           &kp POUND     &kp CARET     &kp LBRC      &kp RBRC      &kp DOLLAR    &kp ASTRK         &kp GRAVE     &kp MINUS     &kp EQUAL     &kp LBKT      &kp RBKT      &kp BSLH
+//      // ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
+//           ___           ___           ___           ___           &kp COLON     ___               &kp TILDE     &kp UNDER     &kp PLUS      &kp LBRC      &kp RBRC      &kp PIPE
+//      // ╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
+//                                                     ___           ___           ___              ___           ___           ___
+//      //                                           ╰─────────────┴───────────────────────────╯   ╰─────────────┴─────────────┴─────────────╯
+// )
 
 ZMK_LAYER(num,
      // ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮   ╭─────────────┬─────────────┬─────────────┬─────────────┬─────────────┬─────────────╮
@@ -249,7 +276,7 @@ ZMK_LAYER(num,
      // ├─────────────┼────────────┼─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┼─────────────┼─────────────┤
           ___           TAB_LEFT      TAB_RIGHT     &tab_swapper  &grave_swapper &kp PG_DN        &kp MINUS     &kp N1        &kp N2        &kp N3        &kp SLASH     ___
      // ╰─────────────┴─────────────┴─────────────┼─────────────┼─────────────┼─────────────┤   ├─────────────┼─────────────┼─────────────┼─────────────┴─────────────┴─────────────╯
-                                                    ___           CANCEL        ___               ___           &kp N0        &kp N0
+                                                    ___           CANCEL        ___               ___           &kp ENTER     &kp N0
      //                                           ╰─────────────┴─────────────┴─────────────╯   ╰─────────────┴─────────────┴─────────────╯
 )
 
